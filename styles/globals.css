@@ -16,12 +16,9 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+*{
+  margin:0px;
+  padding:0px;
+  border:0px;
+  border-radius:0px;
 }
