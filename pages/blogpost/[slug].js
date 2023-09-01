@@ -2,24 +2,22 @@ import {useRouter} from 'next/router'
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-const Post = () => {
-    const router = useRouter();
-    let {slug} = router.query;
+const Post = (props) => {
 
-    let [heading,setHeading] = useState("");
-    let [content,setContent] = useState("");
-    let [author,setAuthor] = useState("");
+    let [heading,setHeading] = useState(props.data.heading);
+    let [content,setContent] = useState(props.data.content);
+    let [author,setAuthor] = useState(props.data.author);
 
-    useEffect(() => {
-        (async ()=>{
-            let data = await fetch('http://localhost:3000/api/blog?slug='+slug+'.json', {method:"GET"});
-            data = await data.json();
-            console.log(slug);
-            setHeading(data.heading);
-            setContent(data.content);
-            setAuthor(data.author);
-        })();
-    })
+    // useEffect(() => {
+    //     (async ()=>{
+    //         let data = await fetch('http://localhost:3000/api/blog?slug='+slug+'.json', {method:"GET"});
+    //         data = await data.json();
+    //         console.log(slug);
+    //         setHeading(data.heading);
+    //         setContent(data.content);
+    //         setAuthor(data.author);
+    //     })();
+    // })
 
     return(
         <div className="w-[80%] m-auto">
@@ -31,6 +29,12 @@ const Post = () => {
             </div>
         </div>
     )
+}
+
+export const getServerSideProps = async (context) => {
+    let data = await fetch('http://localhost:3000/api/blog?slug='+context.query.slug+'.json', {method:"GET"});
+    data = await data.json();
+    return {props:{data}}
 }
 
 export default Post;

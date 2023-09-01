@@ -1,16 +1,16 @@
 import BlogComponent from "./Components/blogComponent"
 import { useState, useEffect } from "react";
 
-const Blogs = () => {
-    const [blogarr, setBlogArr] = useState([]);
+const Blogs = (props) => {
+    const [blogarr, setBlogArr] = useState(props.arr);
 
-    useEffect(() => {
-        (async () =>{
-            let arr = await fetch('http://localhost:3000/api/allblogs',{method:"GET"});
-            arr = await arr.json();
-            setBlogArr(arr);
-        })();
-    },[])
+    // useEffect(() => {
+    //     (async () =>{
+    //         let arr = await fetch('http://localhost:3000/api/allblogs',{method:"GET"});
+    //         arr = await arr.json();
+    //         setBlogArr(arr);
+    //     })();
+    // },[])
 
     return (
         <div className="w-[80%] m-auto">
@@ -25,5 +25,11 @@ const Blogs = () => {
         </div>
     )
 }
+
+export const getServerSideProps = async () => {
+    let arr = await fetch('http://localhost:3000/api/allblogs',{method:"GET"});
+    arr = await arr.json();
+    return { props:{arr}}
+  }
 
 export default Blogs;
